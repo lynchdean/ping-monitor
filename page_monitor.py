@@ -22,7 +22,7 @@ class PageMonitor:
                 print("No changes.")
                 reference_digest = new_hash.hexdigest()
             else:
-                print("Live.")
+                print("Changes detected!")
                 has_updated = True
 
             time.sleep(self.wait_time)
