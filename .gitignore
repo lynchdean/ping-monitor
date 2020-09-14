@@ -1,4 +1,5 @@
-secrets.yaml
+secrets.py
+follow.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
