@@ -4,8 +4,8 @@ import re
 import discord
 import tweepy
 
-import secrets
 import follow
+import secrets
 from twitter_listener import TwitterListener
 
 access_token = secrets.access_token
@@ -30,7 +30,7 @@ class MyClient(discord.Client):
             auth=api.auth,
             listener=TwitterListener(disc=self.send_twitter, loop=asyncio.get_event_loop())
         )
-        my_stream.filter(follow=follow.all_, is_async=True)
+        my_stream.filter(follow=follow.all_, is_async=True, )
 
     async def send_twitter(self, status):
         print(status)
@@ -39,8 +39,8 @@ class MyClient(discord.Client):
         embed = discord.Embed(title=status.user.screen_name, description=status.text, url=url, colour=0x1DA1F2)
         embed.set_thumbnail(url=status.user.profile_image_url_https)
         tweet_urls = re.findall(r'(https?://\S+)', status.text)
-        for url in tweet_urls:
-            embed.add_field(name="url", value=url, inline=False)
+        for idx, url in enumerate(tweet_urls):
+            embed.add_field(name="url [{0}]".format(str(idx + 1)), value=url, inline=False)
 
         await channel.send(embed=embed)
 
