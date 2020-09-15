@@ -8,11 +8,14 @@ import follow
 import secrets
 from twitter_listener import TwitterListener
 
+# Twitter secrets
 access_token = secrets.access_token
 access_token_secret = secrets.access_token_secret
 consumer_key = secrets.consumer_key
 consumer_secret = secrets.consumer_secret
+# Discord Secrets
 discord_token = secrets.discord_token
+channel_id = secrets.channel_id
 
 
 class MyClient(discord.Client):
@@ -28,14 +31,14 @@ class MyClient(discord.Client):
         api = tweepy.API(get_auth())
         my_stream = tweepy.Stream(
             auth=api.auth,
-            listener=TwitterListener(disc=self.send_twitter, loop=asyncio.get_event_loop())
+            listener=TwitterListener(disc=self.send_tweet, loop=asyncio.get_event_loop())
         )
         my_stream.filter(follow=follow.all_, is_async=True, )
 
-    async def send_twitter(self, status):
-        print(status)
-        channel = self.get_channel(754838173087170560)
-        url = "https://twitter.com/" + status.user.screen_name + "/status/" + status.id_str
+    async def send_tweet(self, status):
+        channel = self.get_channel(channel_id)
+        url = f"https://twitter.com/{status.user.screen_name}/status/{status.id_str}"
+
         embed = discord.Embed(title=status.user.screen_name, description=status.text, url=url, colour=0x1DA1F2)
         embed.set_thumbnail(url=status.user.profile_image_url_https)
         tweet_urls = re.findall(r'(https?://\S+)', status.text)
