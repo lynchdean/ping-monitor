@@ -1,6 +1,9 @@
+# Debug
+host = ""
+
 # Discord
 discord_token = ""
-channel_id = ""
+channel_id = 
 
 # Twitter
 consumer_key = ""
