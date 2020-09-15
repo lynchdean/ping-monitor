@@ -52,7 +52,7 @@ class MyClient(discord.Client):
         await channel.send(embed=embed)
 
         # Debug
-        print(status)
+        # print(status)
         debug_channel = self.get_channel(debug_channel_id)
         debug_em = discord.Embed(title=status.user.screen_name, description=status.text, url=url, colour=0x1DA1F2)
         debug_em.set_thumbnail(url=status.user.profile_image_url_https)
